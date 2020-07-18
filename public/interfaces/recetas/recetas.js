@@ -8,7 +8,7 @@ let Nombre;
 
 function loadRecetas(page, limit, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/recetas?page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetas?page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{

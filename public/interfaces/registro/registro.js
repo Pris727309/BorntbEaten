@@ -14,7 +14,7 @@ function guardarUser(){
     let newUser = {Nombre, Apellido, Correo, Password}
 
     let xhr = new XMLHttpRequest();
-    xhr.open('POST',`http://localhost:3000/api/users`);
+    xhr.open('POST',`/api/users`);
     xhr.setRequestHeader('Content-Type','application/json');
     //xhr.setRequestHeader('x-auth', token)
     console.log(JSON.stringify(newUser));

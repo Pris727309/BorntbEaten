@@ -14,9 +14,8 @@ const path = require('path');
 
 //app.use('/', require(__dirname+'/public/interfaces/sign-in'));
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + "/public/interfaces/sign-in/Index.html"))
+    res.sendFile(path.join(__dirname + "/public/interfaces/sign-in/index.html"))
 });
-
 app.use('/registro',express.static(__dirname+"/public/interfaces/registro"));
 app.use('/recetas',express.static(__dirname+"/public/interfaces/recetas"));
 app.use('/perfil',express.static(__dirname+"/public/interfaces/perfil"));

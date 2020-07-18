@@ -10,6 +10,7 @@ const {checkToken} = require('./auth');
 const {checkRol} = require('./auth');
 const cookieParser = require('cookie-parser');
 const fetch = require('node-fetch');
+const path = require('/');
 
 //app.use('/login', express.static(__dirname+"/public/interfaces/sign-in"));
 app.get('/', function(req, res) {

@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const fetch = require('node-fetch');
 const path = require('path');
 
-app.use('/', require('./public/interfaces/sign-in'));
+app.use('/', require(__dirname+'/public/interfaces/sign-in'));
 //app.get('/', function(req, res) {
 //    res.sendFile(path.join(__dirname + "/public/interfaces/sign-in/Index.html"))
 //});

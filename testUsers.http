@@ -1,0 +1,45 @@
+@host=http://localhost:3000
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb3JyZW8iOiJwY3ZAbW9uZy5jb20iLCJ1aWQiOjIxMDUsImlhdCI6MTU5NDgyNjE2NywiZXhwIjoxNTk0ODMzMzY3fQ.yCYrXFM2x8bx-MUh8oNsxoO_B0jJyASWskbKp718zwo
+
+###
+GET {{host}}/api/users
+x-auth: {{token}}
+###
+DELETE {{host}}/api/users/pequeño@parcero.com
+//x-user-token: "z93fzQ_kH-NPjd1d_WE"
+
+###
+POST {{host}}/api/users
+Content-Type: application/json
+
+{
+  "Nombre": "Priscila",
+  "Apellido": "Campos",
+  "Correo": "pcv@mong.com",
+  "Sexo": "F",
+  "Edad": "33",
+  "Url": "",
+  "Password":"pfinal1",
+  "Rol":"ADMIN"
+}
+
+###
+PUT {{host}}/api/users/dueña@detodo.com
+Content-Type: application/json
+
+{
+  "Nombre": "Fiuriouss",
+  "Apellido": "Chan",
+  "Correo": "dueña@detodo.com",
+  "Sexo": "F",
+  "Edad": "3",
+  "Password":"catnip2"
+}
+###
+POST {{host}}/api/login
+Content-Type: application/json
+
+{
+  "Correo": "pcv@mong.com",
+  "Password": "pfinal1"
+}

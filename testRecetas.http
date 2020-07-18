@@ -1,0 +1,71 @@
+@host=http://localhost:3000
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb3JyZW8iOiJwY3ZAbW9uZy5jb20iLCJ1aWQiOjIxMDUsImlhdCI6MTU5NDgyNjE2NywiZXhwIjoxNTk0ODMzMzY3fQ.yCYrXFM2x8bx-MUh8oNsxoO_B0jJyASWskbKp718zwo
+###
+GET {{host}}/api/detalleReceta/5f07fdd775933e91f1cc898a
+###
+GET {{host}}/api/recetas?page=2&limit=3
+x-auth: {{token}}
+###
+GET {{host}}/api/recetas/2105?Categoria=e&page=0&limit=3
+###
+POST {{host}}/api/recetas/2105
+Content-Type: application/json
+
+{
+    "Nombre":"Enchiladas de mole",
+    "Porciones":"2",
+    "Ingredientes":["pechuga de pollo","cebolla morada","queso fresco para desmoronar","mole almendraro","chocolate 78% cacao","azucar morena","sal","pimienta","ajo en polvo","laurel","consome de pollo","tortillas de maíz","aceite vegetal."],
+    "Cantidades":["1 pieza mediana","1 pieza", "70 gramos","1 tetrapack de 360g listo para servir","100 gramos","2 cucharadas","Al gusto","Al gusto","Al gusto","2 hojas","10 piezas."],
+    "Pasos":["Cocer la pechuga de pollo con sal, pimienta, ajo y laurel.",
+    "Retira la pechuga cocida para deshebrarla y conserva el consome.",
+    "Pon a calentar un sartén a fuego bajo y coloca el mole almendrado.",
+    "Pica en trozos pequeños la barra de chocolate y viertela en el mole asegurando su disolución con movimientos circulares.",
+    "Agrega el azucar a la mezcla y un poco de sal.",
+    "Ve agregando el consome hasta obtener la consistencia deseada.",
+    "Pon a calentar otro sartén a fuego bajo con un poco de aceite vegetal.",
+    "Coloca una tortilla sobre la capa delgada de aceite no muy caliente de 20 a 30 segundos (no debe ponerse dura la tortilla).",
+    "Retira la tortilla del sartén y del lado que se calentó con el aceite, coloca un poco del pollo deshebrado.",
+    "Enrolla el pollo con la tortilla y colocalo en un plato en lo que preparas el resto de las tortillas.",
+    "una vez listas las 10 tortillas separa 5 en un plato y 5 en otro plato procurando que esten bien juntitas para que no se desenrrollen (también puedes dorar un poco el final del taco para fijarlo).",
+    "Vierte el mole preparado encima de los tacos de pollo.",
+    "Desmorona el queso fresco y colocalo encima de las enchiladas.",
+    "Corta la cebolla morada en rodajas y distribuyelas encima de las enchiladas.",
+    "Agrega un poco de sal y disfruta."],
+    "Categoria":"Antojitos"
+}
+
+###
+POST {{host}}/api/user/2105/favoritos
+Content-Type: application/json
+
+{
+    "_id": ""
+}
+###
+DELETE {{host}}/api/recetas/:_id
+###
+PUT {{host}}/api/recetas/:_id
+Content-Type: application/json
+
+{
+    "Nombre":"Enchiladas de Mole",
+    "Porciones":"2",
+    "Ingredientes":["Pechuga de pollo","Cebolla morada","Queso fresco para desmoronar","Mole almendraro","Chocolate 78% cacao","Azucar morena","Sal","Pimienta","Ajo en polvo","Laurel","Consome de pollo","Tortillas de maíz","Aceite vegetal."],
+    "Cantidades":["1 pieza mediana","1 pieza", "70 gramos","1 tetrapack de 360g listo para servir","100 gramos","2 cucharadas","Al gusto","Al gusto","Al gusto","2 hojas","10 piezas."],
+    "Pasos":["Cocer la pechuga de pollo con sal, pimienta, ajo y laurel.",
+    "Retira la pechuga cocida para deshebrarla y conserva el consome.",
+    "Pon a calentar un sartén a fuego bajo y coloca el mole almendrado.",
+    "Pica en trozos pequeños la barra de chocolate y viertela en el mole asegurando su disolución con movimientos circulares.",
+    "Agrega el azucar a la mezcla y un poco de sal.",
+    "Ve agregando el consome hasta obtener la consistencia deseada.",
+    "Pon a calentar otro sartén a fuego bajo con un poco de aceite vegetal.",
+    "Coloca una tortilla sobre la capa delgada de aceite no muy caliente de 20 a 30 segundos (no debe ponerse dura la tortilla).",
+    "Retira la tortilla del sartén y del lado que se calentó con el aceite, coloca un poco del pollo deshebrado.",
+    "Enrolla el pollo con la tortilla y colocalo en un plato en lo que preparas el resto de las tortillas.",
+    "una vez listas las 10 tortillas separa 5 en un plato y 5 en otro plato procurando que esten bien juntitas para que no se desenrrollen (también puedes dorar un poco el final del taco para fijarlo).",
+    "Vierte el mole preparado encima de los tacos de pollo.",
+    "Desmorona el queso fresco y colocalo encima de las enchiladas.",
+    "Corta la cebolla morada en rodajas y distribuyelas encima de las enchiladas.",
+    "Agrega un poco de sal y disfruta."],
+    "Categoria":"Antojitos"
+}

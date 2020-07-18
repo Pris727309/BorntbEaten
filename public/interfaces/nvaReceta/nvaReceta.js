@@ -12,7 +12,7 @@ function guardarReceta(){
     console.log(JSON.stringify(newReceta));
 
     let xhr = new XMLHttpRequest();
-    xhr.open('POST',`http://localhost:3000/api/recetas`);
+    xhr.open('POST',`/api/recetas`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(JSON.stringify(newReceta));
     xhr.onload = ()=>{

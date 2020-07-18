@@ -33,7 +33,7 @@ function limpiar(){
 
 function loadRecetasByCategoria(page, limit, categoria, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/recetas?Categoria=${categoria}&page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetas?Categoria=${categoria}&page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -65,7 +65,7 @@ function getFavoritos(){
 
 function loadRecetasByFavoritos(page, limit, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/recetas?Favoritos=true&page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetas?Favoritos=true&page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -82,7 +82,7 @@ function loadRecetasByFavoritos(page, limit, callback){
 
 function loadRecetasByNombre(page, limit, search, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/recetas?Nombre=${search}&page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetas?Nombre=${search}&page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -99,7 +99,7 @@ function loadRecetasByNombre(page, limit, search, callback){
 
 function loadRecetasByIngrediente(page, limit, search, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/recetas?Ingredientes=${search}&page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetas?Ingredientes=${search}&page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -201,7 +201,7 @@ function modalEliminar(id){
 
 function eliminar(){
     let xhr = new XMLHttpRequest();
-    xhr.open('DELETE',`http://localhost:3000/api/recetas/${idEliminar}`);
+    xhr.open('DELETE',`/api/recetas/${idEliminar}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{

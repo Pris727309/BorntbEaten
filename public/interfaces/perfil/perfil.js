@@ -7,7 +7,7 @@ document.getElementById('userdata').onsubmit = function(evt){
 
 function loadPerfilUser(callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/user`);
+    xhr.open('GET',`/api/user`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{

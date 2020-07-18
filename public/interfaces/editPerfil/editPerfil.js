@@ -6,7 +6,7 @@ loadPerfilUser(huboCambios);
 function loadPerfilUser(callback){
     console.log("loadPerfilUser");
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/user`);
+    xhr.open('GET',`/api/user`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -33,7 +33,7 @@ function savePerfilUser(){
     let newUser={Nombre, Apellido, Contraseña};
 
     let xhr = new XMLHttpRequest();
-    xhr.open('PUT',`http://localhost:3000/api/user`);
+    xhr.open('PUT',`/api/user`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(JSON.stringify(newUser));
     xhr.onload = ()=>{

@@ -3,7 +3,7 @@ let token = localStorage.getItem('token');
 
 function mostrarDetalle(_id, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/editReceta/${_id}`);
+    xhr.open('GET',`/api/editReceta/${_id}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -45,7 +45,7 @@ function cambiarDetalle(){
     let newReceta = {Nombre, Porciones, Ingredientes, Cantidades, Pasos, Categoria, Favoritos}
 
     let xhr = new XMLHttpRequest();
-    xhr.open('PUT',`http://localhost:3000/api/editReceta/${_idReceta}`);
+    xhr.open('PUT',`/api/editReceta/${_idReceta}`);
     xhr.setRequestHeader('Content-Type','application/json');
     console.log(JSON.stringify(newReceta));
     xhr.send(JSON.stringify(newReceta));

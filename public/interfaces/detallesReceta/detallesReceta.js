@@ -2,7 +2,7 @@ let _idReceta = localStorage.getItem('_idReceta');
 
 function mostrarDetalle(_id, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/detalleReceta/${_id}`);
+    xhr.open('GET',`/api/detalleReceta/${_id}`);
     xhr.setRequestHeader('Content-Type','application/json');
     //xhr.setRequestHeader('x-auth', tokenUser)
     xhr.send();

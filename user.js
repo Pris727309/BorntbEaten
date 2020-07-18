@@ -1,5 +1,4 @@
-const mongoose = require("./mongodb-connect");
-const receta = require('./receta');
+const mongoose = require("./mongodb-connect.js");
 const bcrypt = require('bcryptjs');
 
 let userSchema = mongoose.Schema({

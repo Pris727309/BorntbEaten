@@ -1,5 +1,4 @@
 const mongoose = require("./mongodb-connect");
-const user = require('./user');
 
 let recetaSchema = mongoose.Schema({
     uid: {

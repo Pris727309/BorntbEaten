@@ -15,11 +15,12 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.25",
     "node-fetch": "^2.6.0",
     "node-localstorage": "^2.1.6",
     "shortid": "^2.2.15"
   },
   "engines": {
-    "node":"12.18.0"
+    "node": "12.18.0"
   }
 }

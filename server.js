@@ -25,6 +25,8 @@ app.use('/editReceta',express.static(__dirname+"/public/interfaces/editReceta"))
 app.use('/editPerfil',express.static(__dirname+"/public/interfaces/editPerfil"));
 app.use('/detallesReceta',express.static(__dirname+"/public/interfaces/detallesReceta"));
 
+app.use(express.static('public'));
+
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());

@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const port = process.env.PORT || 3000;
 const user = require('./user');
 const receta = require('./receta');
+const recetacontroller = require('./receta-controller');
+const userscontroller = require('./users-controller');
 const { key } = require('./claves.js');
 const {checkToken} = require('./auth');
 const {checkRol} = require('./auth');
@@ -63,6 +65,24 @@ app.post('/api/users', validar, async (req, res)=>{
             res.status(400).send({error: err});
         }
     }
+})
+
+//REGISTRARSE V2
+app.post('/api/usersv2', validar, async (req, res)=>{
+    console.log("creando usuario v2");
+    
+    let doc = await userscontroller.getUser(req.body.Correo);
+    if(doc){
+        res.status(400).send({error: "Esta cuenta ya existe"})
+    }else{
+        try{
+            let usr = await userscontroller.addUser(req.body);
+            res.status(201).send(usr);
+        }catch(err){
+            res.status(400).send({error: err});
+        }
+    }
+    
 })
 
 //ELIMINAR
@@ -143,6 +163,26 @@ app.route('/api/login')
         }
     });
 
+//LOGIN
+app.route('/api/loginv2') 
+    .post(async (req, res)=>{
+        console.log(req.body);
+        let {Correo, Password} = req.body;
+        let usr = await userscontroller.getUser(req.body.Correo);;
+        if (usr){
+            console.log(usr.password);
+            if (bcrypt.compareSync(Password, usr.password)){
+                let token = jwt.sign({Correo:usr.correo, uid:usr.uid}, key, {expiresIn: '2h'});
+                res.cookie('token', token);
+                res.redirect('/recetas');
+            }else{
+                res.redirect('/?error=Verifique su usuario y contraseña')
+            }
+        }else{
+            res.status(404).send({error: "Usuario no existe"});
+        }
+    });
+
     app.post('/api/user/:uid/favoritos', async (req, res) => { 
         console.log('estas en api/usuario/:uid/favoritos');
         console.log("req.params-uid: ", req.params.uid);
@@ -185,8 +225,8 @@ app.route('/api/login')
 
 //------------------------------ RECETAS-------------------------------
     //HOME
-    app.get('/api/recetas', checkToken, async (req, res) => { 
-        console.log('estas en api/recetas');
+    app.get('/api/recetasv2', checkToken, async (req, res) => { 
+        console.log('estas en api/recetas v2');
 
         let uid = req.uid;
         let page = Number(req.query.page) || 0;
@@ -196,7 +236,6 @@ app.route('/api/login')
         console.log(Nombre);
         let Ingredientes = req.query.Ingredientes;
         console.log(Ingredientes);
-        let Favoritos = req.query.Favoritos;
         let skip;
 
         if(page === 0){
@@ -205,13 +244,10 @@ app.route('/api/login')
         else{
             skip = page * limit;
         }
-
-        console.log("skip: ", skip);
         console.log("limit: ", limit);
-        console.log("page: ", page);
 
-        let filtro = await receta.getRecetas(skip,limit,uid);
-
+        let filtro = await recetacontroller.getRecetas(10);
+        /*
         if(Categoria){
             console.log("By Categoria");
             filtro = await receta.getRecetasByCategoria(skip,limit,uid,Categoria);
@@ -228,6 +264,7 @@ app.route('/api/login')
             console.log("By Favoritos");
             filtro = await receta.getRecetasByFavoritos(skip,limit,uid);
         }
+        */
         res.send(filtro);
     });
 
@@ -255,6 +292,18 @@ app.route('/api/login')
         res.send(filtro);
     });
 
+        //Edit DE RECETA
+        app.get('/api/editRecetav2/:_id', checkToken, async (req, res) => { 
+            console.log('estas en GET api/editReceta v2');
+    
+            let _id = req.params._id
+            console.log("_id: ",_id)
+    
+            let filtro = await recetacontroller.getReceta(_id);
+            console.log(filtro);
+            res.send(filtro);
+        });
+
     //EDITAR RECETA
     app.put('/api/editReceta/:_id', checkToken, validarRec, async (req, res)=>{
         console.log('estas en PUT api/editReceta');
@@ -266,6 +315,27 @@ app.route('/api/login')
                 console.log(doc[0]._id);
                 console.log(req.params._id);
                 let rec = await doc[0].changeReceta(req.body);
+                console.log(rec);
+                //res.redirect('/recetas');
+                res.send(rec);
+            }
+        }catch(err){
+            console.log(err);
+            res.status(404).send({error: "Esta receta no existe."})
+        } 
+    })
+
+    //EDITAR RECETA
+    app.put('/api/editRecetav2/:_id', checkToken, validarRec, async (req, res)=>{
+        console.log('estas en PUT api/editReceta');
+        try{
+            let doc = await recetacontroller.getReceta(req.params._id);
+            console.log(doc);
+            
+            if(doc){
+                console.log(doc);
+                console.log(req.params._id);
+                let rec = await recetacontroller.updateReceta(req.body, req.params._id);
                 console.log(rec);
                 //res.redirect('/recetas');
                 res.send(rec);
@@ -291,6 +361,20 @@ app.route('/api/login')
             }
         }
     })
+    //NUEVA RECETA v2
+    app.post('/api/recetasv2', checkToken, validarRec, async (req, res)=>{
+        
+        //console.log(typeof doc.Nombre);
+       
+        try{
+            let rec = await recetacontroller.addReceta(req.body);
+            res.status(201).send(rec);
+        }catch(err){
+            res.status(400).send({error: err});
+        }
+        
+    })
+
 
     //FAVORITOS
     app.get('/api/recetas/favoritos/:uid', checkToken, async (req, res) => { 
@@ -332,11 +416,27 @@ app.route('/api/login')
             res.status(400).send({error: "Esta receta no existe"})
         }
     });
+
+    //ELIMINAR RECETA
+    app.delete('/api/recetasv2/:_id', checkToken, async(req, res)=>{
+        let doc = await recetacontroller.getReceta(req.params._id);
+        console.log(doc);
+        if(doc){
+            try{
+                let rec = await recetacontroller.deleteReceta(req.params._id);
+                res.status(201).send(`Eliminado: ${rec}`);
+            }catch(err){
+                res.status(400).send({error: err});
+            }
+        }else{
+            res.status(404).send({error: "Esta receta no existe"})
+        }
+    });
     
     function validarRec(req, res, next){
         console.log("en validarRec")
-        let {Nombre, Porciones, Ingredientes, Cantidades, Pasos, Categoria} = req.body;
-        if(Nombre && Porciones && Ingredientes && Cantidades && Pasos && Categoria){
+        let {Nombre, Porciones, Ingredientes, Pasos, Categoria} = req.body;
+        if(Nombre && Porciones && Ingredientes && Pasos && Categoria){
             console.log("validarrec exitoso")
             next();
             return
@@ -346,7 +446,6 @@ app.route('/api/login')
                 if(Nombre){}else{falta += ' nombre'};
                 if(Porciones){}else{falta += ' porciones'};
                 if(Ingredientes){}else{falta += ' ingredientes'};
-                if(Cantidades){}else{falta += ' cantidades'};
                 if(Pasos){}else{falta += ' pasos'};
                 if(Categoria){}else{falta += ' categoria'};
                 console.log(falta)

@@ -3,16 +3,15 @@ function guardarReceta(){
     let Nombre = document.getElementById("platillo").value;
     let Porciones = document.getElementById("porcion").value;
     let Ingredientes = document.getElementById("ingredientes").value;
-    let Cantidades = document.getElementById("cantidades").value;
     let Pasos = document.getElementById("pasos").value;
     let Categoria = document.getElementById('inputGroupSelect01').value;
     let Favoritos = document.getElementById('inputGroupSelect02').value;
 
-    let newReceta = {Nombre, Porciones, Ingredientes, Cantidades, Pasos, Categoria, Favoritos}
+    let newReceta = {Nombre, Porciones, Ingredientes, Pasos, Categoria, Favoritos}
     console.log(JSON.stringify(newReceta));
 
     let xhr = new XMLHttpRequest();
-    xhr.open('POST',`/api/recetas`);
+    xhr.open('POST',`/api/recetasv2`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(JSON.stringify(newReceta));
     xhr.onload = ()=>{

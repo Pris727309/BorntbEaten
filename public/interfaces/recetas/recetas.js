@@ -8,7 +8,7 @@ let Nombre;
 
 function loadRecetas(page, limit, callback){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`/api/recetas?page=${page}&limit=${limit}`);
+    xhr.open('GET',`/api/recetasv2?page=${page}&limit=${limit}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
@@ -165,24 +165,22 @@ function paginacion(pagina){
 
     document.querySelector("#receta").innerHTML =  listaRecetas.map(u => 
         `<tr>
-            <td>
-                <img src="./${u.Imagen}" width="120" height="120">
-            </td>
-        <td>${u.Nombre}</td>
-        <td columna="porcion">${u.Porciones}</td>
+           
+        <td>${u.nombre}</td>
+        <td columna="porcion">${u.porciones}</td>
         <td>
-            <p>${u.Ingredientes}</p>
+            <p>${u.ingredientes}</p>
         </td>
-        <td>${u.Categoria}</td>
+        <td>${u.categoria}</td>
         <td><!-- Example single danger button -->
             <div class="btn-group">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Opciones
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" onclick=detalleReceta("${u._id}") href= '../detallesReceta/index.html'>Detalles</a>
-                <a class="dropdown-item" onclick=detalleReceta("${u._id}") href='../editReceta/index.html'>Editar</a>
-                <a class="dropdown-item" onclick=modalEliminar("${u._id}") href="#" >Borrar</a>
+                <a class="dropdown-item" onclick=detalleReceta("${u.uid}") href= '../detallesReceta/index.html'>Detalles</a>
+                <a class="dropdown-item" onclick=detalleReceta("${u.uid}") href='../editReceta/index.html'>Editar</a>
+                <a class="dropdown-item" onclick=modalEliminar("${u.uid}") href="#" >Borrar</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Agregar a favoritos</a>
             </div>
@@ -194,14 +192,14 @@ let idEliminar;
 function modalEliminar(id){
     console.log(id);
     idEliminar = id;
-    let recetaSeleccionada = listaRecetas.filter(receta=> receta._id == id);
-    document.getElementById('nombrePlatillo').innerHTML = `<h5>${recetaSeleccionada[0].Nombre}</h5>`
+    let recetaSeleccionada = listaRecetas.filter(receta=> receta.uid == id);
+    document.getElementById('nombrePlatillo').innerHTML = `<h5>${recetaSeleccionada[0].nombre}</h5>`
     $("#modalEliminar").modal('show')
 }
 
 function eliminar(){
     let xhr = new XMLHttpRequest();
-    xhr.open('DELETE',`/api/recetas/${idEliminar}`);
+    xhr.open('DELETE',`/api/recetasv2/${idEliminar}`);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send();
     xhr.onload = ()=>{
